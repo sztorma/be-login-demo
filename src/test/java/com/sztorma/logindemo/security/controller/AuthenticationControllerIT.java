@@ -1,4 +1,4 @@
-package com.sztorma.logindemo.security;
+package com.sztorma.logindemo.security.controller;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 

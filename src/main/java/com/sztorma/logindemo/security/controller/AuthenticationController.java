@@ -1,5 +1,7 @@
-package com.sztorma.logindemo.security;
+package com.sztorma.logindemo.security.controller;
 
+import com.sztorma.logindemo.security.JwtTokenUtil;
+import com.sztorma.logindemo.security.JwtUserDetailsService;
 import com.sztorma.logindemo.security.model.JwtRequest;
 import com.sztorma.logindemo.security.model.JwtResponse;
 
