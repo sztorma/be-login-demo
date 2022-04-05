@@ -1,8 +1,14 @@
 package com.sztorma.logindemo.security;
 
-import java.util.ArrayList;
+import java.util.Set;
+import java.util.stream.Collectors;
 
-import org.springframework.security.core.userdetails.User;
+import com.sztorma.logindemo.user.dao.UserDao;
+import com.sztorma.logindemo.user.entity.User;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -11,14 +17,17 @@ import org.springframework.stereotype.Service;
 @Service
 public class JwtUserDetailsService implements UserDetailsService {
 
+    @Autowired
+    private UserDao userDao;
+
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        // TODO
-        // this runs 2 times during sucessful auth
-        // once at auth manager at once when we generating token
-        System.out.println("getting user from db");
-        if ("torma".equals(username)) {
-            return new User("torma", "$2a$10$slYQmyNdGzTn7ZLBXBChFOC9f6kFjAqPhccnP6DxlWXx2lPk1C3G6", new ArrayList<>());
+        User user = userDao.findUserByUsername(username);
+        Set<GrantedAuthority> authorities = user.getRoles().stream()
+                .map(role -> new SimpleGrantedAuthority(role.getName().name())).collect(Collectors.toSet());
+        if (user != null) {
+            return new org.springframework.security.core.userdetails.User(user.getUsername(), user.getPassword(),
+                    authorities);
         } else {
             throw new UsernameNotFoundException("User not found with username: " + username);
         }

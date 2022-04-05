@@ -19,8 +19,8 @@ import org.springframework.http.ResponseEntity;
 @SpringBootTest(classes = LoginDemoApplication.class, webEnvironment = WebEnvironment.RANDOM_PORT)
 public class AuthenticationControllerIT {
 
-    private static final String USER = "torma";
-    private static final String PASSWORD = "password";
+    private static final String USER = "Admin";
+    private static final String PASSWORD = "admin";
 
     @Autowired
     private TestRestTemplate restTemplate;

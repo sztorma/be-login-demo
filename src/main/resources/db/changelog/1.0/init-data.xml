@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+                   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                   xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+                        http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.4.xsd">
+
+    <changeSet id="insert-roles" author="sztorma">
+        <insert tableName="roles">
+            <column name="name" value="ROLE_ADMIN"/>
+        </insert>
+        <insert tableName="roles">
+            <column name="name" value="ROLE_MODERATOR"/>
+        </insert>
+        <insert tableName="roles">
+            <column name="name" value="ROLE_USER"/>
+        </insert>
+    </changeSet>
+
+    <!-- pw: admin -->
+    <changeSet id="insert-admin-user" author="sztorma">
+        <insert tableName="users">
+            <column name="id" value="1"/>
+            <column name="username" value="Admin"/>
+            <column name="email" value="sample@server.com"/>
+            <column name="password" value="$2a$10$uKE6CKNsvTBiSOMNzuIgPuSBeOzw07sXVOFC/js47D4FKBzqvO.Lm"/>
+        </insert>
+        <insert tableName="user_roles">
+            <column name="user_id" value="1"/>
+            <column name="role_id" value="1"/>
+        </insert>
+        <insert tableName="user_roles">
+            <column name="user_id" value="1"/>
+            <column name="role_id" value="3"/>
+        </insert>
+    </changeSet>
+
+    <!-- pw: mod -->
+    <changeSet id="insert-moderator-user" author="sztorma">
+        <insert tableName="users">
+            <column name="id" value="2"/>
+            <column name="username" value="User 1"/>
+            <column name="email" value="sample@server.com"/>
+            <column name="password" value="$2a$10$0NVGd8mOPrCPviR3VriUe.Y52MMalQM5WxctszjBIuT5hqReVkZ62"/>
+        </insert>
+        <insert tableName="user_roles">
+            <column name="user_id" value="2"/>
+            <column name="role_id" value="2"/>
+        </insert>
+        <insert tableName="user_roles">
+            <column name="user_id" value="2"/>
+            <column name="role_id" value="3"/>
+        </insert>
+    </changeSet>
+
+    <!-- pw: regular -->
+    <changeSet id="insert-regular-user" author="sztorma">
+        <insert tableName="users">
+            <column name="id" value="3"/>
+            <column name="username" value="User 2"/>
+            <column name="email" value="sample@server.com"/>
+            <column name="password" value="$2a$10$ZHBz/Ig1fAkW5LRZE40lEuzOB8MeumqE8FrwgvRQKQI9Mq5HDCVDS"/>
+        </insert>
+        <insert tableName="user_roles">
+            <column name="user_id" value="3"/>
+            <column name="role_id" value="3"/>
+        </insert>
+    </changeSet>
+
+</databaseChangeLog>
