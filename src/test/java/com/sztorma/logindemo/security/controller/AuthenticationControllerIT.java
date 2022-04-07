@@ -15,6 +15,7 @@ import org.springframework.boot.test.context.SpringBootTest.WebEnvironment;
 import org.springframework.boot.test.web.client.TestRestTemplate;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 
 @SpringBootTest(classes = LoginDemoApplication.class, webEnvironment = WebEnvironment.RANDOM_PORT)
@@ -59,6 +60,6 @@ public class AuthenticationControllerIT {
     private void unauthorizedAuthentication(final HttpEntity<JwtRequest> request) {
         final ResponseEntity<?> responseEntity = this.restTemplate.postForEntity("/api/authenticate", request,
                 JwtRequest.class);
-        assertEquals(401, responseEntity.getStatusCodeValue());
+        assertEquals(HttpStatus.UNAUTHORIZED.value(), responseEntity.getStatusCodeValue());
     }
 }
