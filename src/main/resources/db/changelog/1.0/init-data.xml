@@ -6,13 +6,13 @@
 
     <changeSet id="insert-roles" author="sztorma">
         <insert tableName="roles">
-            <column name="name" value="ROLE_ADMIN"/>
+            <column name="name" value="ADMIN"/>
         </insert>
         <insert tableName="roles">
-            <column name="name" value="ROLE_MODERATOR"/>
+            <column name="name" value="MODERATOR"/>
         </insert>
         <insert tableName="roles">
-            <column name="name" value="ROLE_USER"/>
+            <column name="name" value="USER"/>
         </insert>
     </changeSet>
 
