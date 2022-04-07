@@ -26,7 +26,7 @@ public class AuthenticationFacade {
     public JwtResponse createAuthenticationResponse(JwtRequest authenticationRequest) throws Exception {
         final Authentication auth = authenticate(authenticationRequest.getUsername(),
                 authenticationRequest.getPassword());
-        final String token = jwtTokenUtil.generateToken(auth.getName());
+        final String token = jwtTokenUtil.generateToken(auth);
         return new JwtResponse(token);
     }
 

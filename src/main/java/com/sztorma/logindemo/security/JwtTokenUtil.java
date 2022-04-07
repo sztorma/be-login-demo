@@ -5,8 +5,11 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.function.Function;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Component;
 
@@ -51,9 +54,16 @@ public class JwtTokenUtil implements Serializable {
     }
 
     // generate token for user
-    public String generateToken(String username) {
+    public String generateToken(Authentication authentication) {
         final Map<String, Object> claims = new HashMap<>();
-        return doGenerateToken(claims, username);
+        // adding roles to token (optional)
+        // claims.put("authorities", getAuthorityValues(authentication));
+        return doGenerateToken(claims, authentication.getName());
+    }
+
+    private String getAuthorityValues(Authentication authentication) {
+        return authentication.getAuthorities().stream().map(GrantedAuthority::getAuthority)
+                .collect(Collectors.joining(","));
     }
 
     // while creating the token -

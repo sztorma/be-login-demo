@@ -2,6 +2,7 @@ package com.sztorma.logindemo.security.config;
 
 import com.sztorma.logindemo.security.JwtAuthenticationEntryPoint;
 import com.sztorma.logindemo.security.JwtRequestFilter;
+import com.sztorma.logindemo.user.entity.ERole;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
@@ -58,6 +59,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         httpSecurity.csrf().disable()
                 // dont authenticate this particular request
                 .authorizeRequests().antMatchers("/api/authenticate").permitAll()
+                .antMatchers("/api/content/admin").hasAuthority(ERole.ADMIN.name())
                 // all other requests need to be authenticated
                 .anyRequest().authenticated().and()
                 // make sure we use stateless session; session won't be used to
