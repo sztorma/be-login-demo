@@ -16,6 +16,7 @@ import org.springframework.boot.test.web.client.TestRestTemplate;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 
@@ -27,6 +28,17 @@ public class ContentControllerIT {
 
     @Autowired
     private JwtTokenUtil jwtTokenUtil;
+
+    @Test
+    @DisplayName("Getting content without token")
+    public void testGetContentWithoutToken() {
+        final HttpHeaders headers = generateAuthHeaders("Admin");
+        headers.setBearerAuth(null);
+        final HttpEntity<String> request = new HttpEntity<>(headers);
+        ResponseEntity<String> responseEntity = this.restTemplate.exchange("/api/content/admin", HttpMethod.GET,
+                request, String.class);
+        assertEquals(HttpStatus.UNAUTHORIZED.value(), responseEntity.getStatusCodeValue());
+    }
 
     @Test
     @DisplayName("Getting admin content successfuly")
