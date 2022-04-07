@@ -3,6 +3,7 @@ package com.sztorma.logindemo.security.controller;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import com.sztorma.logindemo.LoginDemoApplication;
+import com.sztorma.logindemo.security.JwtTokenUtil;
 import com.sztorma.logindemo.security.model.JwtRequest;
 import com.sztorma.logindemo.security.model.JwtResponse;
 
@@ -25,6 +26,9 @@ public class AuthenticationControllerIT {
     @Autowired
     private TestRestTemplate restTemplate;
 
+    @Autowired
+    private JwtTokenUtil jwtTokenUtil;
+
     @Test
     @DisplayName("Succesful authentication")
     public void testAuthenticateSuccess() {
@@ -34,7 +38,7 @@ public class AuthenticationControllerIT {
                 JwtResponse.class);
         assertEquals(200, responseEntity.getStatusCodeValue());
         final String token = responseEntity.getBody().getJwttoken();
-        assertEquals(174, token.length());
+        assertEquals(USER, jwtTokenUtil.getUsernameFromToken(token));
 
     }
 
