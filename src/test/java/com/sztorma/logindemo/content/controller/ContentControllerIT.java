@@ -46,9 +46,8 @@ public class ContentControllerIT {
         final HttpEntity<String> request = new HttpEntity<>(generateAuthHeaders("Admin"));
         ResponseEntity<String> responseEntity = this.restTemplate.exchange("/api/content/admin", HttpMethod.GET,
                 request, String.class);
-        assertEquals(200, responseEntity.getStatusCodeValue());
+        assertEquals(HttpStatus.OK.value(), responseEntity.getStatusCodeValue());
         assertEquals("{\"response\": \"response for admin\"}", responseEntity.getBody());
-
     }
 
     @Test
@@ -57,7 +56,7 @@ public class ContentControllerIT {
         final HttpEntity<String> request = new HttpEntity<>(generateAuthHeaders("User 1"));
         ResponseEntity<String> responseEntity = this.restTemplate.exchange("/api/content/admin", HttpMethod.GET,
                 request, String.class);
-        assertEquals(403, responseEntity.getStatusCodeValue());
+        assertEquals(HttpStatus.FORBIDDEN.value(), responseEntity.getStatusCodeValue());
     }
 
     @Test
@@ -66,9 +65,8 @@ public class ContentControllerIT {
         final HttpEntity<String> request = new HttpEntity<>(generateAuthHeaders("User 1"));
         ResponseEntity<String> responseEntity = this.restTemplate.exchange("/api/content/moderator", HttpMethod.GET,
                 request, String.class);
-        assertEquals(200, responseEntity.getStatusCodeValue());
+        assertEquals(HttpStatus.OK.value(), responseEntity.getStatusCodeValue());
         assertEquals("{\"response\": \"response for moderator\"}", responseEntity.getBody());
-
     }
 
     @Test
@@ -77,7 +75,7 @@ public class ContentControllerIT {
         final HttpEntity<String> request = new HttpEntity<>(generateAuthHeaders("User 2"));
         ResponseEntity<String> responseEntity = this.restTemplate.exchange("/api/content/admin", HttpMethod.GET,
                 request, String.class);
-        assertEquals(403, responseEntity.getStatusCodeValue());
+        assertEquals(HttpStatus.FORBIDDEN.value(), responseEntity.getStatusCodeValue());
     }
 
     @Test
@@ -86,9 +84,8 @@ public class ContentControllerIT {
         final HttpEntity<String> request = new HttpEntity<>(generateAuthHeaders("User 2"));
         ResponseEntity<String> responseEntity = this.restTemplate.exchange("/api/content/user", HttpMethod.GET,
                 request, String.class);
-        assertEquals(200, responseEntity.getStatusCodeValue());
+        assertEquals(HttpStatus.OK.value(), responseEntity.getStatusCodeValue());
         assertEquals("{\"response\": \"response for user\"}", responseEntity.getBody());
-
     }
 
     private HttpHeaders generateAuthHeaders(String username) {
