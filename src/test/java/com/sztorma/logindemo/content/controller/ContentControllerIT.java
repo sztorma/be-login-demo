@@ -39,9 +39,18 @@ public class ContentControllerIT {
 
     }
 
+    @Test
+    @DisplayName("Getting admin content with not proper authority")
+    public void testGetAdminContentFail() {
+        final HttpEntity<String> request = new HttpEntity<>(generateAuthHeaders("User 1"));
+        ResponseEntity<String> responseEntity = this.restTemplate.exchange("/api/content/admin", HttpMethod.GET,
+                request, String.class);
+        assertEquals(403, responseEntity.getStatusCodeValue());
+    }
+
     private HttpHeaders generateAuthHeaders(String username) {
         final HttpHeaders headers = new HttpHeaders();
-        final String token = jwtTokenUtil.doGenerateToken(new HashMap<>(), "Admin", System.currentTimeMillis(),
+        final String token = jwtTokenUtil.doGenerateToken(new HashMap<>(), username, System.currentTimeMillis(),
                 5 * 60 * 60);
         headers.setBearerAuth(token);
         headers.setContentType(MediaType.APPLICATION_JSON);
