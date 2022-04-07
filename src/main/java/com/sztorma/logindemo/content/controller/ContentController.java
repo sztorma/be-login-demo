@@ -18,4 +18,11 @@ public class ContentController {
     public ResponseEntity<String> adminContent() {
         return new ResponseEntity<>(new String("{\"response\": \"response for admin\"}"), HttpStatus.OK);
     }
+
+    @GetMapping(value = "/moderator")
+    @ResponseBody
+    public ResponseEntity<String> moderatorContent() {
+        return new ResponseEntity<>(new String("{\"response\": \"response for moderator\"}"), HttpStatus.OK);
+    }
+
 }

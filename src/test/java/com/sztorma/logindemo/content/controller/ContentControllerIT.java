@@ -48,6 +48,26 @@ public class ContentControllerIT {
         assertEquals(403, responseEntity.getStatusCodeValue());
     }
 
+    @Test
+    @DisplayName("Getting moderator content successfuly")
+    public void testGetModeratorContentSuccess() {
+        final HttpEntity<String> request = new HttpEntity<>(generateAuthHeaders("User 1"));
+        ResponseEntity<String> responseEntity = this.restTemplate.exchange("/api/content/moderator", HttpMethod.GET,
+                request, String.class);
+        assertEquals(200, responseEntity.getStatusCodeValue());
+        assertEquals("{\"response\": \"response for moderator\"}", responseEntity.getBody());
+
+    }
+
+    @Test
+    @DisplayName("Getting moderator content with not proper authority")
+    public void testGetModeratorContentFail() {
+        final HttpEntity<String> request = new HttpEntity<>(generateAuthHeaders("User 2"));
+        ResponseEntity<String> responseEntity = this.restTemplate.exchange("/api/content/admin", HttpMethod.GET,
+                request, String.class);
+        assertEquals(403, responseEntity.getStatusCodeValue());
+    }
+
     private HttpHeaders generateAuthHeaders(String username) {
         final HttpHeaders headers = new HttpHeaders();
         final String token = jwtTokenUtil.doGenerateToken(new HashMap<>(), username, System.currentTimeMillis(),
