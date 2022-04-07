@@ -11,7 +11,6 @@ import org.springframework.security.authentication.DisabledException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Component;
-import org.springframework.transaction.annotation.Transactional;
 
 @Component
 public class AuthenticationFacade {
@@ -22,7 +21,6 @@ public class AuthenticationFacade {
     @Autowired
     private JwtTokenUtil jwtTokenUtil;
 
-    @Transactional(readOnly = true)
     public JwtResponse createAuthenticationResponse(JwtRequest authenticationRequest) throws Exception {
         final Authentication auth = authenticate(authenticationRequest.getUsername(),
                 authenticationRequest.getPassword());
