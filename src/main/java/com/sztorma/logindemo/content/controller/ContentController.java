@@ -25,4 +25,10 @@ public class ContentController {
         return new ResponseEntity<>(new String("{\"response\": \"response for moderator\"}"), HttpStatus.OK);
     }
 
+    @GetMapping(value = "/user")
+    @ResponseBody
+    public ResponseEntity<String> userContent() {
+        return new ResponseEntity<>(new String("{\"response\": \"response for user\"}"), HttpStatus.OK);
+    }
+
 }

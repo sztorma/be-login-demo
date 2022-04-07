@@ -68,6 +68,17 @@ public class ContentControllerIT {
         assertEquals(403, responseEntity.getStatusCodeValue());
     }
 
+    @Test
+    @DisplayName("Getting user content successfuly")
+    public void testGetUserContentSuccess() {
+        final HttpEntity<String> request = new HttpEntity<>(generateAuthHeaders("User 2"));
+        ResponseEntity<String> responseEntity = this.restTemplate.exchange("/api/content/user", HttpMethod.GET,
+                request, String.class);
+        assertEquals(200, responseEntity.getStatusCodeValue());
+        assertEquals("{\"response\": \"response for user\"}", responseEntity.getBody());
+
+    }
+
     private HttpHeaders generateAuthHeaders(String username) {
         final HttpHeaders headers = new HttpHeaders();
         final String token = jwtTokenUtil.doGenerateToken(new HashMap<>(), username, System.currentTimeMillis(),
