@@ -4,13 +4,13 @@ import lombok.Data;
 
 @Data
 public class JwtResponse {
-    private String jwttoken;
+    private String jwt;
 
     // need default constructor for JSON Parsing
     public JwtResponse() {
     }
 
-    public JwtResponse(String jwttoken) {
-        this.jwttoken = jwttoken;
+    public JwtResponse(String jwt) {
+        this.jwt = jwt;
     }
 }

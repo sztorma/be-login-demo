@@ -38,7 +38,7 @@ public class AuthenticationControllerIT {
         ResponseEntity<JwtResponse> responseEntity = this.restTemplate.postForEntity("/api/authenticate", request,
                 JwtResponse.class);
         assertEquals(200, responseEntity.getStatusCodeValue());
-        final String token = responseEntity.getBody().getJwttoken();
+        final String token = responseEntity.getBody().getJwt();
         assertEquals(USER, jwtTokenUtil.getUsernameFromToken(token));
 
     }
