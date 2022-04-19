@@ -85,4 +85,8 @@ public class JwtTokenUtil implements Serializable {
         return (username.equals(userDetails.getUsername()) && !isTokenExpired(token));
     }
 
+    public static String getJwtFromAuthHeader(String authorization) {
+        return authorization.substring(7);
+    }
+
 }

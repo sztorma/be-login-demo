@@ -6,4 +6,6 @@ public interface UserService {
 
     public User getUserByName(String name);
 
+    public User getUserFromJwt(String jwt);
+
 }

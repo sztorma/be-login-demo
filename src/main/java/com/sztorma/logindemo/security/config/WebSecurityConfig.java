@@ -63,6 +63,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers("/api/content/moderator").hasAnyAuthority(ERole.ADMIN.name(), ERole.MODERATOR.name())
                 .antMatchers("/api/content/user")
                 .hasAnyAuthority(ERole.ADMIN.name(), ERole.MODERATOR.name(), ERole.USER.name())
+                .antMatchers("/api/user/get/jwt").authenticated()
                 // all other requests need to be authenticated
                 .anyRequest().authenticated().and()
                 // make sure we use stateless session; session won't be used to
