@@ -19,4 +19,9 @@ public class EntityDaoImpl<Entity extends Identity, Repository extends CrudRepos
         repository.deleteById(id);
     }
 
+    @Override
+    public Entity save(Entity entity) {
+        return repository.save(entity);
+    }
+
 }

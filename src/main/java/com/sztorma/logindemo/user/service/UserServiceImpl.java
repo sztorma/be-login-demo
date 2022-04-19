@@ -1,5 +1,7 @@
 package com.sztorma.logindemo.user.service;
 
+import java.util.Date;
+
 import com.sztorma.logindemo.security.JwtTokenUtil;
 import com.sztorma.logindemo.user.dao.UserDao;
 import com.sztorma.logindemo.user.entity.User;
@@ -27,6 +29,13 @@ public class UserServiceImpl implements UserService {
     public User getUserFromJwt(String jwt) {
         final String username = this.jwtTokenUtil.getClaimFromToken(jwt, Claims::getSubject);
         return getUserByName(username);
+    }
+
+    @Override
+    public void saveLastLogin(String username, Date date) {
+        final User user = getUserByName(username);
+        user.setLastLogin(date);
+        userDao.save(user);
     }
 
 }
