@@ -64,6 +64,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers("/api/content/user")
                 .hasAnyAuthority(ERole.ADMIN.name(), ERole.MODERATOR.name(), ERole.USER.name())
                 .antMatchers("/api/user/get/jwt").authenticated()
+                .antMatchers("/api/route/get/for-current-roles/for-component/**").authenticated()
                 // all other requests need to be denied
                 .anyRequest().denyAll().and()
                 // allow cors to access our api
