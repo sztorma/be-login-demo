@@ -8,6 +8,7 @@
  <include file="create-table-users.xml" relativeToChangelogFile="true" />
  <include file="create-table-roles.xml" relativeToChangelogFile="true" />
  <include file="create-table-user-roles.xml" relativeToChangelogFile="true" />
+ <include file="create-table-routes.xml" relativeToChangelogFile="true" />
  <include file="init-data.xml" relativeToChangelogFile="true" />
 
 </databaseChangeLog>

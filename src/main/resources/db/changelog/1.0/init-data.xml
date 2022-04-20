@@ -70,4 +70,37 @@
         </insert>
     </changeSet>
 
+    <changeSet id="insert-admin-route" author="sztorma">
+        <insert tableName="routes">
+            <column name="id" value="3"/>
+            <column name="role_id" value="1"/>
+            <column name="name" value="admin"/>
+            <column name="component" value="menu-nav"/>
+            <column name="order_number" value="1"/>
+            <column name="link" value="/menu/admin"/>
+        </insert>
+    </changeSet>
+
+    <changeSet id="insert-moderator-route" author="sztorma">
+        <insert tableName="routes">
+            <column name="id" value="1"/>
+            <column name="role_id" value="2"/>
+            <column name="name" value="moderator"/>
+            <column name="component" value="menu-nav"/>
+            <column name="order_number" value="2"/>
+            <column name="link" value="/menu/moderator"/>
+        </insert>
+    </changeSet>
+
+    <changeSet id="insert-user-route" author="sztorma">
+        <insert tableName="routes">
+            <column name="id" value="2"/>
+            <column name="role_id" value="3"/>
+            <column name="name" value="user"/>
+            <column name="component" value="menu-nav"/>
+            <column name="order_number" value="3"/>
+            <column name="link" value="/menu/user"/>
+        </insert>
+    </changeSet>
+
 </databaseChangeLog>
