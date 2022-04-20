@@ -18,7 +18,9 @@ public class UserEntityTransformer extends EntityTransformer<UserDto, User> {
         dto.setUsername(entity.getUsername());
         final String[] roles = entity.getRoles().stream().map(erole -> erole.getName().name()).toArray(String[]::new);
         dto.setRoles(roles);
-        dto.setLastLogin(new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(entity.getLastLogin()));
+        if (entity.getLastLogin() != null) {
+            dto.setLastLogin(new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(entity.getLastLogin()));
+        }
         return dto;
     }
 
