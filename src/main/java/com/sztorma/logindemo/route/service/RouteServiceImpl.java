@@ -1,5 +1,6 @@
 package com.sztorma.logindemo.route.service;
 
+import java.util.List;
 import java.util.Set;
 
 import com.sztorma.logindemo.route.dao.RouteDao;
@@ -16,7 +17,7 @@ public class RouteServiceImpl implements RouteService {
     private RouteDao routeDao;
 
     @Override
-    public Set<Route> getComponentRoutesForRoles(Set<Role> roles, String component) {
+    public List<Route> getComponentRoutesForRoles(Set<Role> roles, String component) {
         return routeDao.getComponentRoutesForRoles(roles, component);
     }
 

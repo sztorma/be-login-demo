@@ -1,5 +1,6 @@
 package com.sztorma.logindemo.route.dao;
 
+import java.util.List;
 import java.util.Set;
 
 import com.sztorma.logindemo.common.EntityDaoImpl;
@@ -13,8 +14,8 @@ import org.springframework.stereotype.Service;
 public class RouteDaoImpl extends EntityDaoImpl<Route, RouteRepository> implements RouteDao {
 
     @Override
-    public Set<Route> getComponentRoutesForRoles(Set<Role> roles, String component) {
-        return repository.findByRoleInAndComponent(roles, component);
+    public List<Route> getComponentRoutesForRoles(Set<Role> roles, String component) {
+        return repository.findByRoleInAndComponentOrderByOrder(roles, component);
     }
 
 }
