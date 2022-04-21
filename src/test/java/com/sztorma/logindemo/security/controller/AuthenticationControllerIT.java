@@ -39,8 +39,9 @@ public class AuthenticationControllerIT {
                 JwtResponse.class);
         assertEquals(200, responseEntity.getStatusCodeValue());
         final String token = responseEntity.getBody().getJwt();
+        final boolean requiredCaptcha = responseEntity.getBody().isCaptchaRequired();
         assertEquals(USER, jwtTokenUtil.getUsernameFromToken(token));
-
+        assertEquals(false, requiredCaptcha);
     }
 
     @Test

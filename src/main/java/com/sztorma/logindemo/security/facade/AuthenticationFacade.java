@@ -33,7 +33,8 @@ public class AuthenticationFacade {
                 authenticationRequest.getPassword());
         saveLastLogin(authenticationRequest.getUsername(), new Date());
         final String token = jwtTokenUtil.generateToken(auth);
-        return new JwtResponse(token);
+        boolean captchaRequired = getCaptchaRequired(authenticationRequest.getUsername());
+        return new JwtResponse(token, captchaRequired);
     }
 
     private Authentication authenticate(String username, String password) throws Exception {
@@ -55,5 +56,10 @@ public class AuthenticationFacade {
     @Transactional
     public void increaseLoginAttempt(String username) {
         userService.increaseLoginAttempt(username);
+    }
+
+    @Transactional(readOnly = true)
+    private boolean getCaptchaRequired(String username) {
+        return userService.getCaptchaRequired(username);
     }
 }

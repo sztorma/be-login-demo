@@ -14,4 +14,6 @@ public interface UserService {
 
     public void increaseLoginAttempt(String username);
 
+    public boolean getCaptchaRequired(String username);
+
 }

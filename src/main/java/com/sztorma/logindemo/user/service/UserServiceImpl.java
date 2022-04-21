@@ -7,6 +7,7 @@ import com.sztorma.logindemo.user.dao.UserDao;
 import com.sztorma.logindemo.user.entity.User;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import io.jsonwebtoken.Claims;
@@ -19,6 +20,9 @@ public class UserServiceImpl implements UserService {
 
     @Autowired
     private JwtTokenUtil jwtTokenUtil;
+
+    @Value("${security.max-login}")
+    private static int MAX_LOGIN;
 
     @Override
     public User getUserByName(String name) {
@@ -49,6 +53,19 @@ public class UserServiceImpl implements UserService {
             }
             userDao.save(user);
         }
+    }
+
+    @Override
+    public boolean getCaptchaRequired(String username) {
+        final User user = getUserByName(username);
+        if (user == null) {
+            return false;
+        }
+
+        if (user.getLoginAttempt() != null) {
+            return user.getLoginAttempt() > MAX_LOGIN;
+        }
+        return false;
     }
 
 }
