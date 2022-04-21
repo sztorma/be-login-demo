@@ -41,12 +41,14 @@ public class UserServiceImpl implements UserService {
     @Override
     public void increaseLoginAttempt(String username) {
         final User user = getUserByName(username);
-        if (user.getLoginAttempt() != null) {
-            user.setLoginAttempt(user.getLoginAttempt() + 1);
-        } else {
-            user.setLoginAttempt(1);
+        if (user != null) {
+            if (user.getLoginAttempt() != null) {
+                user.setLoginAttempt(user.getLoginAttempt() + 1);
+            } else {
+                user.setLoginAttempt(1);
+            }
+            userDao.save(user);
         }
-        userDao.save(user);
     }
 
 }
