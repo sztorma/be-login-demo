@@ -63,4 +63,10 @@ public class AuthenticationFacade {
         userService.increaseLoginAttempt(username);
     }
 
+    @Transactional
+    public void finalizeAuthAfterCaptcha(String authorization) {
+        final User user = userService.getUserFromAuth(authorization);
+        userService.saveLastLogin(user, new Date());
+        userService.resetLoginAttempt(user);
+    }
 }
