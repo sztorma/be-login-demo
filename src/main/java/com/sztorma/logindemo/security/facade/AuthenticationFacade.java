@@ -42,6 +42,7 @@ public class AuthenticationFacade {
         } catch (DisabledException e) {
             throw new Exception("USER_DISABLED", e);
         } catch (BadCredentialsException e) {
+            increaseLoginAttempt(username);
             throw new Exception("INVALID_CREDENTIALS", e);
         }
     }
@@ -49,5 +50,10 @@ public class AuthenticationFacade {
     @Transactional
     public void saveLastLogin(String username, Date date) {
         userService.saveLastLogin(username, new Date());
+    }
+
+    @Transactional
+    public void increaseLoginAttempt(String username) {
+        userService.increaseLoginAttempt(username);
     }
 }

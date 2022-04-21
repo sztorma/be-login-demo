@@ -12,4 +12,6 @@ public interface UserService {
 
     public void saveLastLogin(String username, Date date);
 
+    public void increaseLoginAttempt(String username);
+
 }
