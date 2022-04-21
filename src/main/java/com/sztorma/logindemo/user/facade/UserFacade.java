@@ -1,6 +1,5 @@
 package com.sztorma.logindemo.user.facade;
 
-import com.sztorma.logindemo.security.JwtTokenUtil;
 import com.sztorma.logindemo.user.entity.User;
 import com.sztorma.logindemo.user.model.dto.UserDto;
 import com.sztorma.logindemo.user.service.UserService;
@@ -21,8 +20,7 @@ public class UserFacade {
 
     @Transactional(readOnly = true)
     public UserDto getUserFromAuthorization(String authorization) {
-        final String jwt = JwtTokenUtil.getJwtFromAuthHeader(authorization);
-        final User user = userService.getUserFromJwt(jwt);
+        final User user = userService.getUserFromAuth(authorization);
         return userEntityTransformer.entityToDto(user);
     }
 }

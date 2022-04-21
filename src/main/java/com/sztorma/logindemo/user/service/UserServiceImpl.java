@@ -66,4 +66,16 @@ public class UserServiceImpl implements UserService {
         return false;
     }
 
+    @Override
+    public User getUserFromAuth(String authorization) {
+        final String jwt = JwtTokenUtil.getJwtFromAuthHeader(authorization);
+        return getUserFromJwt(jwt);
+    }
+
+    @Override
+    public void resetLoginAttempt(User user) {
+        user.setLoginAttempt(0);
+        userDao.save(user);
+    }
+
 }

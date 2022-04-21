@@ -16,4 +16,8 @@ public interface UserService {
 
     public boolean getCaptchaRequired(User user);
 
+    public User getUserFromAuth(String authorization);
+
+    public void resetLoginAttempt(User user);
+
 }
