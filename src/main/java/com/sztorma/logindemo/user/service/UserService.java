@@ -10,10 +10,10 @@ public interface UserService {
 
     public User getUserFromJwt(String jwt);
 
-    public void saveLastLogin(String username, Date date);
+    public void saveLastLogin(User user, Date date);
 
     public void increaseLoginAttempt(String username);
 
-    public boolean getCaptchaRequired(String username);
+    public boolean getCaptchaRequired(User user);
 
 }

@@ -36,8 +36,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public void saveLastLogin(String username, Date date) {
-        final User user = getUserByName(username);
+    public void saveLastLogin(User user, Date date) {
         user.setLastLogin(date);
         userDao.save(user);
     }
@@ -56,8 +55,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public boolean getCaptchaRequired(String username) {
-        final User user = getUserByName(username);
+    public boolean getCaptchaRequired(User user) {
         if (user == null) {
             return false;
         }

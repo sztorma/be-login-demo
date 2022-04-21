@@ -5,6 +5,7 @@ import java.util.Date;
 import com.sztorma.logindemo.security.JwtTokenUtil;
 import com.sztorma.logindemo.security.model.JwtRequest;
 import com.sztorma.logindemo.security.model.JwtResponse;
+import com.sztorma.logindemo.user.entity.User;
 import com.sztorma.logindemo.user.service.UserService;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,9 +32,12 @@ public class AuthenticationFacade {
     public JwtResponse createAuthenticationResponse(JwtRequest authenticationRequest) throws Exception {
         final Authentication auth = authenticate(authenticationRequest.getUsername(),
                 authenticationRequest.getPassword());
-        saveLastLogin(authenticationRequest.getUsername(), new Date());
         final String token = jwtTokenUtil.generateToken(auth);
-        boolean captchaRequired = getCaptchaRequired(authenticationRequest.getUsername());
+        User user = userService.getUserByName(authenticationRequest.getUsername());
+        boolean captchaRequired = userService.getCaptchaRequired(user);
+        if (!captchaRequired) {
+            userService.saveLastLogin(user, new Date());
+        }
         return new JwtResponse(token, captchaRequired);
     }
 
@@ -49,8 +53,9 @@ public class AuthenticationFacade {
     }
 
     @Transactional
-    public void saveLastLogin(String username, Date date) {
-        userService.saveLastLogin(username, new Date());
+    public void saveLastLogin(User user, Date date) {
+        userService.saveLastLogin(user, new Date());
+
     }
 
     @Transactional
@@ -58,8 +63,4 @@ public class AuthenticationFacade {
         userService.increaseLoginAttempt(username);
     }
 
-    @Transactional(readOnly = true)
-    private boolean getCaptchaRequired(String username) {
-        return userService.getCaptchaRequired(username);
-    }
 }
