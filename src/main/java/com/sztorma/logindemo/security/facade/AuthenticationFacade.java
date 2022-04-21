@@ -1,8 +1,10 @@
 package com.sztorma.logindemo.security.facade;
 
 import java.util.Date;
+import java.util.HashMap;
 
 import com.sztorma.logindemo.security.JwtTokenUtil;
+import com.sztorma.logindemo.security.model.CaptchaRequest;
 import com.sztorma.logindemo.security.model.JwtRequest;
 import com.sztorma.logindemo.security.model.JwtResponse;
 import com.sztorma.logindemo.user.entity.User;
@@ -27,18 +29,25 @@ public class AuthenticationFacade {
     private JwtTokenUtil jwtTokenUtil;
 
     @Autowired
+    private JwtTokenUtil captchaTokenUtil;
+
+    @Autowired
     private UserService userService;
 
     public JwtResponse createAuthenticationResponse(JwtRequest authenticationRequest) throws Exception {
         final Authentication auth = authenticate(authenticationRequest.getUsername(),
                 authenticationRequest.getPassword());
-        final String token = jwtTokenUtil.generateToken(auth);
+        String token = null;
+        String captchaToken = null;
         User user = userService.getUserByName(authenticationRequest.getUsername());
         boolean captchaRequired = userService.getCaptchaRequired(user);
         if (!captchaRequired) {
+            token = jwtTokenUtil.generateToken(auth);
             userService.saveLastLogin(user, new Date());
+        } else {
+            captchaToken = captchaTokenUtil.generateToken(auth);
         }
-        return new JwtResponse(token, captchaRequired);
+        return new JwtResponse(token, captchaToken);
     }
 
     private Authentication authenticate(String username, String password) throws Exception {
@@ -64,9 +73,13 @@ public class AuthenticationFacade {
     }
 
     @Transactional
-    public void finalizeAuthAfterCaptcha(String authorization) {
-        final User user = userService.getUserFromAuth(authorization);
+    public JwtResponse captchaAuthentication(CaptchaRequest captchaRequest) {
+        final String username = captchaTokenUtil.getUsernameFromToken(captchaRequest.getCaptchaToken());
+        final User user = userService.getUserByName(username);
+        String jwt = jwtTokenUtil.doGenerateToken(new HashMap<>(), user.getUsername(), System.currentTimeMillis(),
+                5 * 60 * 60);
         userService.saveLastLogin(user, new Date());
         userService.resetLoginAttempt(user);
+        return new JwtResponse(jwt, null);
     }
 }

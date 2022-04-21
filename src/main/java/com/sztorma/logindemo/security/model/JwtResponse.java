@@ -6,14 +6,14 @@ import lombok.Data;
 public class JwtResponse {
 
     private String jwt;
-    private boolean captchaRequired;
+    private String captchaToken;
 
     // need default constructor for JSON Parsing
     public JwtResponse() {
     }
 
-    public JwtResponse(String jwt, boolean captchaRequired) {
+    public JwtResponse(String jwt, String captchaToken) {
         this.jwt = jwt;
-        this.captchaRequired = captchaRequired;
+        this.captchaToken = captchaToken;
     }
 }
