@@ -22,7 +22,7 @@ public class UserServiceImpl implements UserService {
     private JwtTokenUtil jwtTokenUtil;
 
     @Value("${security.max-login}")
-    private static int MAX_LOGIN;
+    private int maxLogin;
 
     @Override
     public User getUserByName(String name) {
@@ -61,7 +61,7 @@ public class UserServiceImpl implements UserService {
         }
 
         if (user.getLoginAttempt() != null) {
-            return user.getLoginAttempt() > MAX_LOGIN;
+            return user.getLoginAttempt() > maxLogin;
         }
         return false;
     }
