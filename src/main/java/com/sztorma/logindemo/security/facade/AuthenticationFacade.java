@@ -43,7 +43,7 @@ public class AuthenticationFacade {
         boolean captchaRequired = userService.getCaptchaRequired(user);
         if (!captchaRequired) {
             token = jwtTokenUtil.generateToken(auth);
-            userService.saveLastLogin(user, new Date());
+            userService.resetLoginAttemptAndSaveLastLogin(user, new Date());
         } else {
             captchaToken = captchaTokenUtil.generateToken(auth);
         }
@@ -62,12 +62,6 @@ public class AuthenticationFacade {
     }
 
     @Transactional
-    public void saveLastLogin(User user, Date date) {
-        userService.saveLastLogin(user, new Date());
-
-    }
-
-    @Transactional
     public void increaseLoginAttempt(String username) {
         userService.increaseLoginAttempt(username);
     }
@@ -78,8 +72,7 @@ public class AuthenticationFacade {
         final User user = userService.getUserByName(username);
         String jwt = jwtTokenUtil.doGenerateToken(new HashMap<>(), user.getUsername(), System.currentTimeMillis(),
                 5 * 60 * 60);
-        userService.saveLastLogin(user, new Date());
-        userService.resetLoginAttempt(user);
+        userService.resetLoginAttemptAndSaveLastLogin(user, new Date());
         return new JwtResponse(jwt, null);
     }
 }

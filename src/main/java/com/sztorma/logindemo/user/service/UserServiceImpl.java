@@ -73,8 +73,9 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public void resetLoginAttempt(User user) {
+    public void resetLoginAttemptAndSaveLastLogin(User user, Date date) {
         user.setLoginAttempt(0);
+        user.setLastLogin(date);
         userDao.save(user);
     }
 

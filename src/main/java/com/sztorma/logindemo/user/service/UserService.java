@@ -18,6 +18,6 @@ public interface UserService {
 
     public User getUserFromAuth(String authorization);
 
-    public void resetLoginAttempt(User user);
+    public void resetLoginAttemptAndSaveLastLogin(User user, Date date);
 
 }
