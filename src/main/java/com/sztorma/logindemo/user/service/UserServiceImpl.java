@@ -61,7 +61,7 @@ public class UserServiceImpl implements UserService {
         }
 
         if (user.getLoginAttempt() != null) {
-            return user.getLoginAttempt() > maxLogin;
+            return user.getLoginAttempt() >= maxLogin;
         }
         return false;
     }
